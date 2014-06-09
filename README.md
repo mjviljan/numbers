@@ -30,3 +30,9 @@ The algorithm is a simple (and stupid) depth-first search, starting separately f
 ### Optimization ideas
 
 Since many of the solutions are mirror images or rotated versions of another solution, it should be enough to find all solutions in only part of the starting positions and then generate other solutions based on those. Using this approach, it should be enough to e.g. find all solutions starting in one quarter of the grid, and then transform those to find the rest of the solutions.
+
+## License
+
+Copyright © 2014 Mika Viljanen.
+
+Distributed under the Apache License, Version 2.0.
