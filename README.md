@@ -1,6 +1,7 @@
 Number puzzle solver
 ====================
 
+This puzzle solver finds all valid solutions to a simple number puzzle.
 
 ## The puzzle
 
