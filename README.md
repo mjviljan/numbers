@@ -25,7 +25,7 @@ The third picture shows the situation after eight moves. The game could still be
 
 I've written a program earlier that finds a single solution to the puzzle by random search. However, this time I wanted to find all possible solutions (so I could later do a graphical presentation of how many solutions there are from each starting point etc.), so a different approach was needed.
 
-The algorithm is a simple (and stupid) depth-first search, starting separately from each starting point. There is currently very little optimization, and the solver runs rather quickly only up to a 5x5 grid for which it finds all possible solutions in a couple of seconds.
+The algorithm is a simple (and stupid) depth-first search, starting separately from each starting point. There is currently very little optimization, and the solver runs rather quickly only up to a 5x5 grid for which it finds all possible solutions in less than a second.
 
 ### Optimization ideas
 
