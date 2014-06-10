@@ -57,6 +57,13 @@ public class PuzzleSolver {
 		return true;
 	}
 
+	private void clearLastMove(final Position pos) {
+		board.removeNumber(pos);
+		if (!moves.isEmpty()) {
+			moves.remove(moves.size() - 1);
+		}
+	}
+
 	private List<Solution> findNextMove(final Position startPosition, final int currentNumber, final Position currentPos) {
 		List<Solution> solutions = new LinkedList<Solution>();
 		logSearchProgress();
@@ -71,6 +78,7 @@ public class PuzzleSolver {
 				if (board.isFull()) {
 					logFoundSolution();
 					solutions.add(new Solution(startPosition, moves));
+					clearLastMove(newPosCandidate);
 				}
 				else {
 					solutions.addAll(findNextMove(startPosition, currentNumber + 1, newPosCandidate));
@@ -78,10 +86,7 @@ public class PuzzleSolver {
 			}
 		}
 
-		board.removeNumber(currentPos);
-		if (!moves.isEmpty()) {
-			moves.remove(moves.size() - 1);
-		}
+		clearLastMove(currentPos);
 
 		return solutions;
 	}
@@ -137,8 +142,8 @@ public class PuzzleSolver {
 
 	public static void main(String[] args) {
 		// the real board's size is 10x10 but currently the algorithm is fast
-		// enough up to a 6x6 board only
-		PuzzleSolver solver = new PuzzleSolver(new Board(6, 6));
+		// enough up to a 5x5 board only
+		PuzzleSolver solver = new PuzzleSolver(new Board(5, 5));
 		solver.reportSolutions();
 	}
 }

@@ -24,10 +24,10 @@ public class PuzzlerSolverTest {
 
 	@Test
 	public void foundSolutionsIncludeKnownSolution() {
-		Position solutionStartPosition = new Position(1, 1);
+		Position solutionStartPosition = new Position(4, 0);
 		List<Move> solutionsMoves = ImmutableList.of(
-				Move.E, Move.S, Move.W, Move.NE, Move.W, Move.NE, Move.SE, Move.SW, Move.N, Move.W, Move.NE, Move.S,
-				Move.W, Move.N, Move.SE, Move.SW, Move.N, Move.E, Move.SW, Move.N, Move.E, Move.S, Move.NW, Move.S);
+				Move.S, Move.W, Move.N, Move.SE, Move.SW, Move.E, Move.NW, Move.SW, Move.E, Move.NW, Move.E, Move.NW,
+				Move.SW, Move.SE, Move.N, Move.SW, Move.N, Move.E, Move.S, Move.NW, Move.E, Move.SW, Move.NW, Move.E);
 		Solution knownSolution = new Solution(solutionStartPosition, solutionsMoves);
 
 		PuzzleSolver solver = new PuzzleSolver(new Board(5, 5));
