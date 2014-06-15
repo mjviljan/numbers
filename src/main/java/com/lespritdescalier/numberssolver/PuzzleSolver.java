@@ -17,6 +17,8 @@ import com.google.common.base.Stopwatch;
  */
 public class PuzzleSolver {
 	private final Logger logger = Logger.getLogger(PuzzleSolver.class);
+	private final boolean SHOW_SOLUTION_BOARD = false;
+	private boolean recordSolutions = false;
 
 	/**
 	 * A puzzle board used to store the state of the progressing search.
@@ -28,9 +30,19 @@ public class PuzzleSolver {
 	 */
 	private final List<Move> moves;
 
+	/**
+	 * Founds solutions. Only recorded if the <code>recordSolutions</code> flag
+	 * is set.
+	 */
+	private final List<Solution> solutions;
+
+	private long solutionCount;
+
 	public PuzzleSolver(final Board board) {
 		this.board = board;
 		moves = new LinkedList<Move>();
+		solutions = new LinkedList<Solution>();
+		solutionCount = 0;
 	}
 
 	private void logSearchProgress() {
@@ -39,9 +51,15 @@ public class PuzzleSolver {
 		}
 	}
 
-	private void logFoundSolution() {
+	private void logFoundSolution(Solution solution) {
 		if (logger.isDebugEnabled()) {
-			logger.debug("Solution found:\n" + board);
+			String toLog = "Solution found:";
+			if (SHOW_SOLUTION_BOARD) {
+				toLog += "\n" + board;
+			} else {
+				toLog += solution;
+			}
+			logger.debug(toLog);
 		}
 	}
 
@@ -64,8 +82,7 @@ public class PuzzleSolver {
 		}
 	}
 
-	private List<Solution> findNextMove(final Position startPosition, final int currentNumber, final Position currentPos) {
-		List<Solution> solutions = new LinkedList<Solution>();
+	private void findNextMove(final Position startPosition, final int currentNumber, final Position currentPos) {
 		logSearchProgress();
 
 		for (Move moveToAttempt : Move.values()) {
@@ -76,39 +93,37 @@ public class PuzzleSolver {
 				board.addNumber(newPosCandidate, currentNumber);
 
 				if (board.isFull()) {
-					logFoundSolution();
-					solutions.add(new Solution(startPosition, moves));
+					solutionCount++;
+					Solution foundSolution = new Solution(startPosition, moves);
+					logFoundSolution(foundSolution);
+					if (recordSolutions) {
+						solutions.add(foundSolution);
+					}
 					clearLastMove(newPosCandidate);
 				}
 				else {
-					solutions.addAll(findNextMove(startPosition, currentNumber + 1, newPosCandidate));
+					findNextMove(startPosition, currentNumber + 1, newPosCandidate);
 				}
 			}
 		}
 
 		clearLastMove(currentPos);
-
-		return solutions;
 	}
 
-	private List<Solution> searchAllSolutionsFromStartingPoint(final Position start) {
+	private void searchAllSolutionsFromStartingPoint(final Position start) {
 		logger.info("Starting from " + start);
 		board.clear();
 		moves.clear();
 		int startingNumber = 1;
 		board.addNumber(start, startingNumber);
 
-		return findNextMove(start, startingNumber + 1, start);
+		findNextMove(start, startingNumber + 1, start);
 	}
 
-	private List<Solution> findSolutionsFromAllColumnsOfRow(final int row) {
-		List<Solution> solutions = new LinkedList<Solution>();
-
+	private void findSolutionsFromAllColumnsOfRow(final int row) {
 		for (int col = 0; col < board.width; col++) {
-			solutions.addAll(searchAllSolutionsFromStartingPoint(new Position(col, row)));
+			searchAllSolutionsFromStartingPoint(new Position(col, row));
 		}
-
-		return solutions;
 	}
 
 	/**
@@ -118,14 +133,10 @@ public class PuzzleSolver {
 	 * 
 	 * @return all found solutions for the board
 	 */
-	public List<Solution> findSolutionsFromAllPositions() {
-		List<Solution> solutions = new LinkedList<Solution>();
-
+	public void findSolutionsFromAllPositions() {
 		for (int row = 0; row < board.height; row++) {
-			solutions.addAll(findSolutionsFromAllColumnsOfRow(row));
+			findSolutionsFromAllColumnsOfRow(row);
 		}
-
-		return solutions;
 	}
 
 	/**
@@ -134,10 +145,18 @@ public class PuzzleSolver {
 	 */
 	public void reportSolutions() {
 		Stopwatch stopwatch = Stopwatch.createStarted();
-		List<Solution> solutions = findSolutionsFromAllPositions();
+		findSolutionsFromAllPositions();
 		long duration = stopwatch.elapsed(TimeUnit.MILLISECONDS);
 
-		logger.info(String.format("Found a total of %d solutions in %d milliseconds", solutions.size(), duration));
+		logger.info(String.format("Found a total of %d solutions in %d milliseconds", solutionCount, duration));
+	}
+
+	public void recordSolutions() {
+		recordSolutions = true;
+	}
+
+	public List<Solution> getSolutions() {
+		return solutions;
 	}
 
 	public static void main(String[] args) {

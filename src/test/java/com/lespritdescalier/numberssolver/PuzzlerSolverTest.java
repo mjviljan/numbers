@@ -16,7 +16,9 @@ public class PuzzlerSolverTest {
 	@Test
 	public void allSolutionsToPuzzleAreUnique() {
 		PuzzleSolver solver = new PuzzleSolver(new Board(5, 5));
-		List<Solution> allSolutions = solver.findSolutionsFromAllPositions();
+		solver.recordSolutions();
+		solver.findSolutionsFromAllPositions();
+		List<Solution> allSolutions = solver.getSolutions(); 
 		Set<Solution> uniqueSolutions = new HashSet<Solution>(allSolutions);
 
 		assertEquals(allSolutions.size(), uniqueSolutions.size());
@@ -31,7 +33,9 @@ public class PuzzlerSolverTest {
 		Solution knownSolution = new Solution(solutionStartPosition, solutionsMoves);
 
 		PuzzleSolver solver = new PuzzleSolver(new Board(5, 5));
-		List<Solution> allSolutions = solver.findSolutionsFromAllPositions();
+		solver.recordSolutions();
+		solver.findSolutionsFromAllPositions();
+		List<Solution> allSolutions = solver.getSolutions(); 
 		assertTrue(allSolutions.contains(knownSolution));
 	}
 }
