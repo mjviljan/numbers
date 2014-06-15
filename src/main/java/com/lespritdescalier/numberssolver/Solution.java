@@ -1,5 +1,6 @@
 package com.lespritdescalier.numberssolver;
 
+import java.util.Collections;
 import java.util.List;
 
 import com.google.common.base.Objects;
@@ -47,5 +48,11 @@ public class Solution {
 
 		Solution other = (Solution) obj;
 		return Objects.equal(startPosition, other.startPosition) && Objects.equal(moves, other.moves);
+	}
+
+	@SuppressWarnings("unchecked")
+	public Solution rotate(int boardWidth, int boardHeight) {
+		Position rotatedStartposition = new Position(boardWidth - 1 - startPosition.row, startPosition.col);
+		return new Solution(rotatedStartposition, Collections.EMPTY_LIST);
 	}
 }
