@@ -121,7 +121,7 @@ public class PuzzleSolver {
 	}
 
 	private void findSolutionsFromAllColumnsOfRow(final int row) {
-		for (int col = 0; col < board.width; col++) {
+		for (int col = 0; col < board.width / 2; col++) {
 			searchAllSolutionsFromStartingPoint(new Position(col, row));
 		}
 	}
@@ -134,7 +134,7 @@ public class PuzzleSolver {
 	 * @return all found solutions for the board
 	 */
 	public void findSolutionsFromAllPositions() {
-		for (int row = 0; row < board.height; row++) {
+		for (int row = 0; row < board.height / 2; row++) {
 			findSolutionsFromAllColumnsOfRow(row);
 		}
 	}
@@ -162,7 +162,7 @@ public class PuzzleSolver {
 	public static void main(String[] args) {
 		// the real board's size is 10x10 but currently the algorithm is fast
 		// enough up to a 5x5 board only
-		PuzzleSolver solver = new PuzzleSolver(new Board(5, 5));
+		PuzzleSolver solver = new PuzzleSolver(new Board(6, 6));
 		solver.reportSolutions();
 	}
 }
