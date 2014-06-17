@@ -11,7 +11,7 @@ public class SolutionTest {
 	private final List<Move> NO_MOVES = Collections.emptyList();
 
 	@Test
-	public void rotatingSolutionReturnsSolutionRotated90Degrees() {
+	public void rotatingSolutionMovesStartingPointRotatingAroundCenterOfBoard() {
 		Position origPos = new Position(2, 0);
 		Solution original = new Solution(origPos, NO_MOVES);
 
