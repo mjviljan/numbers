@@ -1,5 +1,6 @@
 package com.lespritdescalier.numberssolver;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -12,7 +13,7 @@ import com.google.common.base.Stopwatch;
  * The algorithm for finding all solutions for a number puzzle of given board
  * size. The algorithm is a simple depth-first search with no
  * optimizations.
- * 
+ *
  * @author Mika Viljanen (https://github.com/mjviljan)
  */
 public class PuzzleSolver {
@@ -120,22 +121,23 @@ public class PuzzleSolver {
 		findNextMove(start, startingNumber + 1, start);
 	}
 
-	private void findSolutionsFromAllColumnsOfRow(final int row) {
-		for (int col = 0; col < board.width / 2; col++) {
-			searchAllSolutionsFromStartingPoint(new Position(col, row));
-		}
+	private List<Position> getUniqueSolutionStartingPoints() {
+		final List startingPoints = new ArrayList();
+		startingPoints.add(new Position(0, 0));
+		return startingPoints;
 	}
 
 	/**
 	 * Find all solutions for the board. The search is started separately from
 	 * each position on the board and solutions are ordered by starting
 	 * position.
-	 * 
+	 *
 	 * @return all found solutions for the board
 	 */
-	public void findSolutionsFromAllPositions() {
-		for (int row = 0; row < board.height / 2; row++) {
-			findSolutionsFromAllColumnsOfRow(row);
+	public void findSolutionsFromUniquePositions() {
+		final List<Position> startingPoints = getUniqueSolutionStartingPoints();
+		for (Position position : startingPoints) {
+			searchAllSolutionsFromStartingPoint(position);
 		}
 	}
 
@@ -145,10 +147,10 @@ public class PuzzleSolver {
 	 */
 	public void reportSolutions() {
 		Stopwatch stopwatch = Stopwatch.createStarted();
-		findSolutionsFromAllPositions();
+		findSolutionsFromUniquePositions();
 		long duration = stopwatch.elapsed(TimeUnit.MILLISECONDS);
 
-		logger.info(String.format("Found a total of %d solutions in %d milliseconds", solutionCount, duration));
+		logger.info(String.format("Found a total of %d solutions in %d milliseconds (%dx%d)", solutionCount, duration, board.width, board.height));
 	}
 
 	public void recordSolutions() {
@@ -162,7 +164,7 @@ public class PuzzleSolver {
 	public static void main(String[] args) {
 		// the real board's size is 10x10 but currently the algorithm is fast
 		// enough up to a 5x5 board only
-		PuzzleSolver solver = new PuzzleSolver(new Board(6, 6));
+		PuzzleSolver solver = new PuzzleSolver(new Board(4));
 		solver.reportSolutions();
 	}
 }

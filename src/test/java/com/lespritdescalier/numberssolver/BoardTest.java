@@ -7,16 +7,15 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class BoardTest {
-	private static final int BOARD_WIDTH = 10;
-	private static final int BOARD_HEIGHT = 10;
-	private static final int VALID_COL = BOARD_WIDTH / 2;
-	private static final int VALID_ROW = BOARD_HEIGHT / 2;
+	private static final int BOARD_SIZE = 10;
+	private static final int VALID_COL = BOARD_SIZE / 2;
+	private static final int VALID_ROW = BOARD_SIZE / 2;
 	private static final Position VALID_POSITION = new Position(VALID_COL, VALID_ROW);
 	private Board board;
 
 	@Before
 	public void setUp() {
-		board = new Board(BOARD_WIDTH, BOARD_HEIGHT);
+		board = new Board(BOARD_SIZE);
 	}
 
 	@Test

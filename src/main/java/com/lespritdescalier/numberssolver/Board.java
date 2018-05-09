@@ -9,10 +9,10 @@ public class Board {
 	public final int width;
 	public final int height;
 
-	public Board(final int columns, final int rows) {
-		width = columns;
-		height = rows;
-		numbers = new int[rows][columns];
+	public Board(final int size) {
+		width = size;
+		height = size;
+		numbers = new int[height][width];
 		numberCount = 0;
 		clear();
 	}
