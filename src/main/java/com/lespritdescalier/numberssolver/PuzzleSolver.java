@@ -101,8 +101,7 @@ public class PuzzleSolver {
 						solutions.add(foundSolution);
 					}
 					clearLastMove(newPosCandidate);
-				}
-				else {
+				} else {
 					findNextMove(startPosition, currentNumber + 1, newPosCandidate);
 				}
 			}
@@ -123,7 +122,16 @@ public class PuzzleSolver {
 
 	private List<Position> getUniqueSolutionStartingPoints() {
 		final List startingPoints = new ArrayList();
-		startingPoints.add(new Position(0, 0));
+
+		int maxCol = (board.width - 1) / 2;
+		int maxRow = (board.height - 1) / 2;
+
+		for (int row = 0; row <= maxRow; row++) {
+			for (int col = row; col <= maxCol; col++) {
+				startingPoints.add(new Position(col, row));
+			}
+		}
+
 		return startingPoints;
 	}
 
@@ -164,7 +172,7 @@ public class PuzzleSolver {
 	public static void main(String[] args) {
 		// the real board's size is 10x10 but currently the algorithm is fast
 		// enough up to a 5x5 board only
-		PuzzleSolver solver = new PuzzleSolver(new Board(4));
+		PuzzleSolver solver = new PuzzleSolver(new Board(5));
 		solver.reportSolutions();
 	}
 }
