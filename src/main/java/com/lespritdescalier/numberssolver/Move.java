@@ -14,7 +14,7 @@ enum Move {
 	public final int rowChange;
 	private final String stringPresentation;
 
-	private Move(final String stringPresentation, final int colChange, final int rowChange) {
+	Move(final String stringPresentation, final int colChange, final int rowChange) {
 		this.stringPresentation = stringPresentation;
 		this.colChange = colChange;
 		this.rowChange = rowChange;

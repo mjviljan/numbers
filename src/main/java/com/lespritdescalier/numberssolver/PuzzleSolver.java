@@ -83,10 +83,10 @@ public class PuzzleSolver {
 		}
 	}
 
-	private void findNextMove(final Position startPosition, final int currentNumber, final Position currentPos) {
+	private void findNextMove(final Position startPosition, final int currentNumber, final Position currentPos, final Move[] movesToAttempt) {
 		logSearchProgress();
 
-		for (Move moveToAttempt : Move.values()) {
+		for (Move moveToAttempt : movesToAttempt) {
 			Position newPosCandidate = currentPos.applyMove(moveToAttempt);
 
 			if (isPossibleMove(newPosCandidate)) {
@@ -102,7 +102,7 @@ public class PuzzleSolver {
 					}
 					clearLastMove(newPosCandidate);
 				} else {
-					findNextMove(startPosition, currentNumber + 1, newPosCandidate);
+					findNextMove(startPosition, currentNumber + 1, newPosCandidate, Move.values());
 				}
 			}
 		}
@@ -117,7 +117,13 @@ public class PuzzleSolver {
 		int startingNumber = 1;
 		board.addNumber(start, startingNumber);
 
-		findNextMove(start, startingNumber + 1, start);
+		Move[] movesToAttempt;
+		if (start.col == start.row) {
+			movesToAttempt = new Move[]{Move.N, Move.NE, Move.E, Move.SE};
+		} else {
+			movesToAttempt = Move.values();
+		}
+		findNextMove(start, startingNumber + 1, start, movesToAttempt);
 	}
 
 	private List<Position> getUniqueSolutionStartingPoints() {
@@ -172,7 +178,7 @@ public class PuzzleSolver {
 	public static void main(String[] args) {
 		// the real board's size is 10x10 but currently the algorithm is fast
 		// enough up to a 5x5 board only
-		PuzzleSolver solver = new PuzzleSolver(new Board(5));
+		PuzzleSolver solver = new PuzzleSolver(new Board(6));
 		solver.reportSolutions();
 	}
 }
