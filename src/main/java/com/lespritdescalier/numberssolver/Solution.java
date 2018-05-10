@@ -1,5 +1,6 @@
 package com.lespritdescalier.numberssolver;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -54,5 +55,15 @@ public class Solution {
 	public Solution rotate(int boardWidth, int boardHeight) {
 		Position rotatedStartposition = new Position(boardWidth - 1 - startPosition.row, startPosition.col);
 		return new Solution(rotatedStartposition, Collections.EMPTY_LIST);
+	}
+
+	public Solution mirrorDiagonally() {
+		final List<Move> mirroredMoves = new ArrayList<>();
+
+		for (Move move : this.moves) {
+			mirroredMoves.add(move.mirrorDiagonally());
+		}
+
+		return new Solution(this.startPosition, mirroredMoves);
 	}
 }
