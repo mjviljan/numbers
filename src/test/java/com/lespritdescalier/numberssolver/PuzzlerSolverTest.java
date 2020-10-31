@@ -7,7 +7,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import com.google.common.collect.ImmutableList;
@@ -20,18 +19,17 @@ public class PuzzlerSolverTest {
 		solver.recordSolutions();
 		solver.findSolutionsFromUniquePositions();
 		List<Solution> allSolutions = solver.getSolutions();
-		Set<Solution> uniqueSolutions = new HashSet<Solution>(allSolutions);
+		Set<Solution> uniqueSolutions = new HashSet<>(allSolutions);
 
 		assertEquals(allSolutions.size(), uniqueSolutions.size());
 	}
 
-	@Ignore
 	@Test
 	public void foundSolutionsIncludeKnownSolution() {
-		Position solutionStartPosition = new Position(0, 0);
+		Position solutionStartPosition = new Position(1, 1);
 		List<Move> solutionsMoves = ImmutableList.of(
-				Move.S, Move.W, Move.N, Move.SE, Move.SW, Move.E, Move.NW, Move.SW, Move.E, Move.NW, Move.E, Move.NW,
-				Move.SW, Move.SE, Move.N, Move.SW, Move.N, Move.E, Move.S, Move.NW, Move.E, Move.SW, Move.NW, Move.E);
+				Move.E, Move.SW, Move.NW, Move.E, Move.SW, Move.E, Move.N, Move.W, Move.SE, Move.SW, Move.E, Move.NW,
+				Move.NW, Move.E, Move.S, Move.W, Move.NE, Move.S, Move.NW, Move.NE, Move.SE, Move.W, Move.SE, Move.W);
 		Solution knownSolution = new Solution(solutionStartPosition, solutionsMoves);
 
 		PuzzleSolver solver = new PuzzleSolver(new Board(5));

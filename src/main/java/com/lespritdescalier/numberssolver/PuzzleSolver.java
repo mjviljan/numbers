@@ -1,13 +1,11 @@
 package com.lespritdescalier.numberssolver;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
+import org.apache.commons.lang3.time.StopWatch;
 import org.apache.log4j.Logger;
 
-import com.google.common.base.Stopwatch;
 
 /**
  * The algorithm for finding all solutions for a number puzzle of given board
@@ -41,8 +39,8 @@ public class PuzzleSolver {
 
 	public PuzzleSolver(final Board board) {
 		this.board = board;
-		moves = new LinkedList<Move>();
-		solutions = new LinkedList<Solution>();
+		moves = new LinkedList<>();
+		solutions = new LinkedList<>();
 		solutionCount = 0;
 	}
 
@@ -127,7 +125,7 @@ public class PuzzleSolver {
 	}
 
 	private List<Position> getUniqueSolutionStartingPoints() {
-		final List startingPoints = new ArrayList();
+		final List<Position> startingPoints = new LinkedList<>();
 
 		int maxCol = (board.width - 1) / 2;
 		int maxRow = (board.height - 1) / 2;
@@ -145,8 +143,6 @@ public class PuzzleSolver {
 	 * Find all solutions for the board. The search is started separately from
 	 * each position on the board and solutions are ordered by starting
 	 * position.
-	 *
-	 * @return all found solutions for the board
 	 */
 	public void findSolutionsFromUniquePositions() {
 		final List<Position> startingPoints = getUniqueSolutionStartingPoints();
@@ -160,9 +156,11 @@ public class PuzzleSolver {
 	 * solutions and the time (in milliseconds) it took to find them.
 	 */
 	public void reportSolutions() {
-		Stopwatch stopwatch = Stopwatch.createStarted();
+		StopWatch stopWatch = new StopWatch();
+		stopWatch.start();
 		findSolutionsFromUniquePositions();
-		long duration = stopwatch.elapsed(TimeUnit.MILLISECONDS);
+		stopWatch.stop();
+		long duration = stopWatch.getTime();
 
 		logger.info(String.format("Found a total of %d solutions in %d milliseconds (%dx%d)", solutionCount, duration, board.width, board.height));
 	}
@@ -178,7 +176,7 @@ public class PuzzleSolver {
 	public static void main(String[] args) {
 		// the real board's size is 10x10 but currently the algorithm is fast
 		// enough up to a 5x5 board only
-		PuzzleSolver solver = new PuzzleSolver(new Board(6));
+		PuzzleSolver solver = new PuzzleSolver(new Board(5));
 		solver.reportSolutions();
 	}
 }

@@ -50,7 +50,7 @@ enum Move {
 		}
 	}
 
-	class PositionChanges {
+	static class PositionChanges {
 		public static final int STRAIGHT_MOVE_LENGTH = 3;
 		public static final int DIAGONAL_MOVE_LENGTH = 2;
 		public static final int NO_CHANGE = 0;
