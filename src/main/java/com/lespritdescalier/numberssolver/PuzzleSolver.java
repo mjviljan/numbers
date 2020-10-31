@@ -8,9 +8,10 @@ import org.apache.log4j.Logger;
 
 
 /**
- * The algorithm for finding all solutions for a number puzzle of given board
- * size. The algorithm is a simple depth-first search with no
- * optimizations.
+ * An algorithm for finding all solutions for a number puzzle of given board
+ * size. The algorithm is a depth-first search with somewhat optimized search
+ * space (attempting to find only unique solutions that are duplicated by
+ * rotating to generate all of the possible solutions).
  *
  * @author Mika Viljanen (https://github.com/mjviljan)
  */
@@ -124,7 +125,7 @@ public class PuzzleSolver {
 		findNextMove(start, startingNumber + 1, start, movesToAttempt);
 	}
 
-	private List<Position> getUniqueSolutionStartingPoints() {
+	protected List<Position> getUniqueSolutionStartingPoints() {
 		final List<Position> startingPoints = new LinkedList<>();
 
 		int maxCol = (board.width - 1) / 2;
