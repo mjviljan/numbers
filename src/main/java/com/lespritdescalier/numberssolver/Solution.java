@@ -64,6 +64,7 @@ public class Solution {
 			mirroredMoves.add(move.mirrorDiagonally());
 		}
 
-		return new Solution(this.startPosition, mirroredMoves);
+		final Position mirroredPosition = new Position(this.startPosition.row, this.startPosition.col);
+		return new Solution(mirroredPosition, mirroredMoves);
 	}
 }

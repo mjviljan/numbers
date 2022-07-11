@@ -19,7 +19,7 @@ import java.util.List;
 public class PuzzleSolver {
 	private final Logger logger = LogManager.getLogger(PuzzleSolver.class);
 	private final boolean SHOW_SOLUTION_BOARD = false;
-	private boolean recordSolutions = false;
+	private boolean recordSolutions = true;
 
 	/**
 	 * A puzzle board used to store the state of the progressing search.
@@ -95,10 +95,12 @@ public class PuzzleSolver {
 
 				if (board.isFull()) {
 					solutionCount++;
-					Solution foundSolution = new Solution(startPosition, moves);
-					logFoundSolution(foundSolution);
-					if (recordSolutions) {
-						solutions.add(foundSolution);
+					if (logger.isDebugEnabled() || recordSolutions) {
+						Solution foundSolution = new Solution(startPosition, moves);
+						logFoundSolution(foundSolution);
+						if (recordSolutions) {
+							solutions.add(foundSolution);
+						}
 					}
 					clearLastMove(newPosCandidate);
 				} else {
@@ -151,6 +153,19 @@ public class PuzzleSolver {
 		for (Position position : startingPoints) {
 			searchAllSolutionsFromStartingPoint(position);
 		}
+	}
+
+	public void mirrorUniqueSolutions() {
+		final List<Solution> mirroredSolutions = new LinkedList<>();
+
+		for (Solution original : solutions) {
+			mirroredSolutions.add(original.mirrorDiagonally());
+			solutionCount++;
+		}
+
+		System.out.println("Original:" + solutions.get(0));
+		System.out.println("Mirrored:" + mirroredSolutions.get(0));
+		solutions.addAll(mirroredSolutions);
 	}
 
 	/**
