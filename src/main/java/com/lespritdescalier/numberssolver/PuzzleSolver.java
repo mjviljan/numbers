@@ -1,10 +1,11 @@
 package com.lespritdescalier.numberssolver;
 
+import org.apache.commons.lang3.time.StopWatch;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.util.LinkedList;
 import java.util.List;
-
-import org.apache.commons.lang3.time.StopWatch;
-import org.apache.log4j.Logger;
 
 
 /**
@@ -16,7 +17,7 @@ import org.apache.log4j.Logger;
  * @author Mika Viljanen (https://github.com/mjviljan)
  */
 public class PuzzleSolver {
-	private final Logger logger = Logger.getLogger(PuzzleSolver.class);
+	private final Logger logger = LogManager.getLogger(PuzzleSolver.class);
 	private final boolean SHOW_SOLUTION_BOARD = false;
 	private boolean recordSolutions = false;
 
@@ -47,7 +48,7 @@ public class PuzzleSolver {
 
 	private void logSearchProgress() {
 		if (logger.isTraceEnabled()) {
-			logger.trace("\n" + board.toString());
+			logger.trace("\n{}", board.toString());
 		}
 	}
 
@@ -110,7 +111,7 @@ public class PuzzleSolver {
 	}
 
 	private void searchAllSolutionsFromStartingPoint(final Position start) {
-		logger.info("Starting from " + start);
+		logger.info("Starting from {}", start);
 		board.clear();
 		moves.clear();
 		int startingNumber = 1;
@@ -163,7 +164,7 @@ public class PuzzleSolver {
 		stopWatch.stop();
 		long duration = stopWatch.getTime();
 
-		logger.info(String.format("Found a total of %d solutions in %d milliseconds (%dx%d)", solutionCount, duration, board.width, board.height));
+		logger.info("Found a total of {} solutions in {} milliseconds ({}x{})", solutionCount, duration, board.width, board.height);
 	}
 
 	public void recordSolutions() {
