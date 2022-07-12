@@ -1,8 +1,7 @@
 package com.lespritdescalier.numberssolver;
 
-import static org.junit.Assert.assertEquals;
-
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class PositionTest {
 
@@ -11,7 +10,7 @@ public class PositionTest {
 		Move move = Move.N;
 		Position origPos = new Position(5, 5);
 		Position newPos = origPos.applyMove(move);
-		assertEquals(origPos.col + move.colChange, newPos.col);
-		assertEquals(origPos.row + move.rowChange, newPos.row);
+		Assertions.assertEquals(origPos.col + move.colChange, newPos.col);
+		Assertions.assertEquals(origPos.row + move.rowChange, newPos.row);
 	}
 }
