@@ -161,14 +161,13 @@ public class PuzzleSolver {
 		}
 
 		mirrorUniqueSolutions();
+		rotateSolutions();
 	}
 
-	public void mirrorUniqueSolutions() {
+	private void mirrorUniqueSolutions() {
 		final List<Solution> mirroredSolutions = new LinkedList<>();
 
-		Set<Solution> uniqueSolutions = new HashSet<>(solutions);
-
-		for (Solution original : uniqueSolutions) {
+		for (Solution original : solutions) {
 			Solution mirrored = original.mirrorDiagonally();
 
 			if (mirrored != null) {
@@ -182,6 +181,34 @@ public class PuzzleSolver {
 		}
 
 		solutions.addAll(mirroredSolutions);
+	}
+
+	private void rotateSolutions() {
+		final List<Solution> rotatedSolutions = new LinkedList<>();
+
+		boolean isBoardSizeOdd = board.height % 2 != 0;
+		int axisRow = board.height / 2;
+
+		for (Solution original : solutions) {
+			// If the board is odd in size (e.g. 5x5), skip the solutions on the middle
+			// row to avoid duplicates when rotating the solutions.
+			// (Otherwise solution on the middle row would be rotated to the upper
+			// middle column which already has its solutions.)
+			if (isBoardSizeOdd && original.startPosition.row == axisRow) {
+				continue;
+			}
+
+			Solution rotated = original.rotate(board.width);
+
+			rotatedSolutions.add(rotated);
+			solutionCount++;
+
+			Position startPosition = rotated.startPosition;
+			Integer oldCount = solutionsByStartingPoint.get(startPosition);
+			solutionsByStartingPoint.put(startPosition, oldCount != null ? oldCount + 1 : 1);
+		}
+
+		solutions.addAll(rotatedSolutions);
 	}
 
 	private void logSolutionsByStartingPoint() {

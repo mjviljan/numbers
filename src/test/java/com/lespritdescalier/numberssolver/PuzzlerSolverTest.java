@@ -81,7 +81,6 @@ public class PuzzlerSolverTest {
 		PuzzleSolver solver = new PuzzleSolver(new Board(5));
 		solver.recordSolutions();
 		solver.findSolutionsFromUniquePositions();
-		solver.mirrorUniqueSolutions();
 		List<Solution> allSolutions = solver.getSolutions();
 		Assertions.assertTrue(allSolutions.contains(knownSolution));
 	}
@@ -93,6 +92,22 @@ public class PuzzlerSolverTest {
 		// From "↙→↖↓→↑↙↖↓↗↓↗←↗↓↖↓→↑↙↖↓→↑" to "↗↓↖→↓←↗↖→↙→↙↑↙→↖→↓←↗↖→↓←"
 		List<Move> solutionsMoves = ImmutableList.of(Move.NE, Move.S, Move.NW, Move.E, Move.S, Move.W, Move.NE, Move.NW, Move.E, Move.SW,
 				Move.E, Move.SW, Move.N, Move.SW, Move.E, Move.NW, Move.E, Move.S, Move.W, Move.NE, Move.NW, Move.E, Move.S, Move.W);
+		Solution knownSolution = new Solution(solutionStartPosition, solutionsMoves);
+
+		PuzzleSolver solver = new PuzzleSolver(new Board(5));
+		solver.recordSolutions();
+		solver.findSolutionsFromUniquePositions();
+		List<Solution> allSolutions = solver.getSolutions();
+		Assertions.assertTrue(allSolutions.contains(knownSolution));
+	}
+
+	@Test
+	public void foundSolutionsIncludeRotatedSolutionOf90Degrees() {
+		// original solution is from (1,1) so mirrored solution should be from (3,1)
+		Position solutionStartPosition = new Position(3,1);
+		// From "→↙↖↓→↑↙→↑←↘↙→↖↖↓→↑↙→↖↙↘↑" to "↓↖↗←↓→↖↓→↑↙↖↓↗↗←↓→↖↓↗↖↙→"
+		List<Move> solutionsMoves = ImmutableList.of(Move.S, Move.NW, Move.NE, Move.W, Move.S, Move.E, Move.NW, Move.S, Move.E, Move.N,
+				Move.SW, Move.NW, Move.S, Move.NE, Move.NE, Move.W, Move.S, Move.E, Move.NW, Move.S, Move.NE, Move.NW, Move.SW, Move.E);
 		Solution knownSolution = new Solution(solutionStartPosition, solutionsMoves);
 
 		PuzzleSolver solver = new PuzzleSolver(new Board(5));
