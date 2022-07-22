@@ -81,6 +81,23 @@ public class PuzzlerSolverTest {
 		PuzzleSolver solver = new PuzzleSolver(new Board(5));
 		solver.recordSolutions();
 		solver.findSolutionsFromUniquePositions();
+		solver.mirrorUniqueSolutions();
+		List<Solution> allSolutions = solver.getSolutions();
+		Assertions.assertTrue(allSolutions.contains(knownSolution));
+	}
+
+	@Test
+	public void foundSolutionsIncludeMirroredSolution() {
+		// original solution is from (2,0) so mirrored solution should be from (0,2)
+		Position solutionStartPosition = new Position(0,2);
+		// From "↙→↖↓→↑↙↖↓↗↓↗←↗↓↖↓→↑↙↖↓→↑" to "↗↓↖→↓←↗↖→↙→↙↑↙→↖→↓←↗↖→↓←"
+		List<Move> solutionsMoves = ImmutableList.of(Move.NE, Move.S, Move.NW, Move.E, Move.S, Move.W, Move.NE, Move.NW, Move.E, Move.SW,
+				Move.E, Move.SW, Move.N, Move.SW, Move.E, Move.NW, Move.E, Move.S, Move.W, Move.NE, Move.NW, Move.E, Move.S, Move.W);
+		Solution knownSolution = new Solution(solutionStartPosition, solutionsMoves);
+
+		PuzzleSolver solver = new PuzzleSolver(new Board(5));
+		solver.recordSolutions();
+		solver.findSolutionsFromUniquePositions();
 		List<Solution> allSolutions = solver.getSolutions();
 		Assertions.assertTrue(allSolutions.contains(knownSolution));
 	}

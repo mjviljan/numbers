@@ -33,6 +33,6 @@ Since many of the solutions are mirror images or rotated versions of another sol
 
 ## License
 
-Copyright © 2014 Mika Viljanen.
+Copyright © 2014-2022 Mika Viljanen.
 
 Distributed under the Apache License, Version 2.0.
