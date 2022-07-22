@@ -8,15 +8,28 @@ import java.util.Collections;
 import java.util.List;
 
 public class SolutionTest {
-	private final List<Move> NO_MOVES = Collections.emptyList();
 
 	@Test
 	public void rotatingSolutionMovesStartingPointRotatingAroundCenterOfBoard() {
 		Position origPos = new Position(2, 0);
-		Solution original = new Solution(origPos, NO_MOVES);
+		List<Move> origMoves = ImmutableList.of(
+				Move.NE, Move.S, Move.NW, Move.E, Move.S,
+				Move.W, Move.NE, Move.NW, Move.E, Move.SW,
+				Move.E, Move.SW, Move.N, Move.SW, Move.E,
+				Move.NW, Move.E, Move.S, Move.W, Move.NE,
+				Move.NW, Move.E, Move.S, Move.W);
+		Solution original = new Solution(origPos, origMoves);
 
-		Solution rotatedSolution = original.rotate(5, 5);
+		Solution rotatedSolution = original.rotate(5);
+		List<Move> rotatedMoves = ImmutableList.of(
+				Move.SE, Move.W, Move.NE, Move.S, Move.W,
+				Move.N, Move.SE, Move.NE, Move.S, Move.NW,
+				Move.S, Move.NW, Move.E, Move.NW, Move.S,
+				Move.NE, Move.S, Move.W, Move.N, Move.SE,
+				Move.NE, Move.S, Move.W, Move.N);
+
 		Assertions.assertEquals(new Position(4, 2), rotatedSolution.startPosition);
+		Assertions.assertEquals(rotatedMoves, rotatedSolution.moves);
 	}
 
 	@Test
