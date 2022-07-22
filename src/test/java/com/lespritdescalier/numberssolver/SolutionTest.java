@@ -20,12 +20,12 @@ public class SolutionTest {
 	}
 
 	@Test
-	public void rotatingSolutionDiagonallyReturnOriginalStartingPointAndCorrectlyMirroredMoves() {
+	public void mirroringSolutionDiagonallyReturnsOriginalStartingPointAndCorrectlyMirroredMoves() {
 		final Position startPos = new Position(0, 0);
 		final Solution original = new Solution(startPos, ImmutableList.of(Move.E, Move.SE, Move.S, Move.SW, Move.W, Move.NW, Move.N, Move.NE));
 
-		Solution rotatedSolution = original.mirrorDiagonally();
-		Assertions.assertEquals(startPos, rotatedSolution.startPosition);
-		Assertions.assertEquals(ImmutableList.of(Move.S, Move.SE, Move.E, Move.NE, Move.N, Move.NW, Move.W, Move.SW), rotatedSolution.moves);
+		Solution mirroredSolution = original.mirrorDiagonally();
+		Assertions.assertEquals(startPos, mirroredSolution.startPosition);
+		Assertions.assertEquals(ImmutableList.of(Move.S, Move.SE, Move.E, Move.NE, Move.N, Move.NW, Move.W, Move.SW), mirroredSolution.moves);
 	}
 }
