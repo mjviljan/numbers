@@ -87,7 +87,7 @@ public class PuzzlerSolverTest {
 
 	@Test
 	public void foundSolutionsIncludeMirroredSolution() {
-		// original solution is from (2,0) so mirrored solution should be from (0,2)
+		// original known solution is from (2,0) so mirrored solution should be from (0,2)
 		Position solutionStartPosition = new Position(0,2);
 		// From "↙→↖↓→↑↙↖↓↗↓↗←↗↓↖↓→↑↙↖↓→↑" to "↗↓↖→↓←↗↖→↙→↙↑↙→↖→↓←↗↖→↓←"
 		List<Move> solutionsMoves = ImmutableList.of(Move.NE, Move.S, Move.NW, Move.E, Move.S, Move.W, Move.NE, Move.NW, Move.E, Move.SW,
@@ -103,11 +103,43 @@ public class PuzzlerSolverTest {
 
 	@Test
 	public void foundSolutionsIncludeRotatedSolutionOf90Degrees() {
-		// original solution is from (1,1) so mirrored solution should be from (3,1)
+		// original known solution is from (1,1) so mirrored solution should be from (3,1)
 		Position solutionStartPosition = new Position(3,1);
 		// From "→↙↖↓→↑↙→↑←↘↙→↖↖↓→↑↙→↖↙↘↑" to "↓↖↗←↓→↖↓→↑↙↖↓↗↗←↓→↖↓↗↖↙→"
 		List<Move> solutionsMoves = ImmutableList.of(Move.S, Move.NW, Move.NE, Move.W, Move.S, Move.E, Move.NW, Move.S, Move.E, Move.N,
 				Move.SW, Move.NW, Move.S, Move.NE, Move.NE, Move.W, Move.S, Move.E, Move.NW, Move.S, Move.NE, Move.NW, Move.SW, Move.E);
+		Solution knownSolution = new Solution(solutionStartPosition, solutionsMoves);
+
+		PuzzleSolver solver = new PuzzleSolver(new Board(5));
+		solver.recordSolutions();
+		solver.findSolutionsFromUniquePositions();
+		List<Solution> allSolutions = solver.getSolutions();
+		Assertions.assertTrue(allSolutions.contains(knownSolution));
+	}
+
+	@Test
+	public void foundSolutionsIncludeRotatedSolutionOf180Degrees() {
+		// original known solution is from (1,1) so mirrored solution should be from (3,3)
+		Position solutionStartPosition = new Position(3,3);
+		// From "→↙↖↓→↑↙→↑←↘↙→↖↖↓→↑↙→↖↙↘↑" to "←↗↘↑←↓↗←↓→↖↗←↘↘↑←↓↗←↘↗↖↓"
+		List<Move> solutionsMoves = ImmutableList.of(Move.W, Move.NE, Move.SE, Move.N, Move.W, Move.S, Move.NE, Move.W, Move.S, Move.E,
+				Move.NW, Move.NE, Move.W, Move.SE, Move.SE, Move.N, Move.W, Move.S, Move.NE, Move.W, Move.SE, Move.NE, Move.NW, Move.S);
+		Solution knownSolution = new Solution(solutionStartPosition, solutionsMoves);
+
+		PuzzleSolver solver = new PuzzleSolver(new Board(5));
+		solver.recordSolutions();
+		solver.findSolutionsFromUniquePositions();
+		List<Solution> allSolutions = solver.getSolutions();
+		Assertions.assertTrue(allSolutions.contains(knownSolution));
+	}
+
+	@Test
+	public void foundSolutionsIncludeRotatedSolutionOf270Degrees() {
+		// original known solution is from (1,1) so mirrored solution should be from (1,3)
+		Position solutionStartPosition = new Position(1, 3);
+		// From "→↙↖↓→↑↙→↑←↘↙→↖↖↓→↑↙→↖↙↘↑" to "↑↘↙→↑←↘↑←↓↗↘↑↙↙→↑←↘↑↙↘↗←"
+		List<Move> solutionsMoves = ImmutableList.of(Move.N, Move.SE, Move.SW, Move.E, Move.N, Move.W, Move.SE, Move.N, Move.W, Move.S,
+				Move.NE, Move.SE, Move.N, Move.SW, Move.SW, Move.E, Move.N, Move.W, Move.SE, Move.N, Move.SW, Move.SE, Move.NE, Move.W);
 		Solution knownSolution = new Solution(solutionStartPosition, solutionsMoves);
 
 		PuzzleSolver solver = new PuzzleSolver(new Board(5));

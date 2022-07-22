@@ -188,6 +188,7 @@ public class PuzzleSolver {
 
 		boolean isBoardSizeOdd = board.height % 2 != 0;
 		int axisRow = board.height / 2;
+		int axisCol = board.width / 2;
 
 		for (Solution original : solutions) {
 			// If the board is odd in size (e.g. 5x5), skip the solutions on the middle
@@ -198,13 +199,35 @@ public class PuzzleSolver {
 				continue;
 			}
 
-			Solution rotated = original.rotate(board.width);
+			Solution rotated90Deg = original.rotate(board.width);
 
-			rotatedSolutions.add(rotated);
+			rotatedSolutions.add(rotated90Deg);
 			solutionCount++;
 
-			Position startPosition = rotated.startPosition;
+			Position startPosition = rotated90Deg.startPosition;
 			Integer oldCount = solutionsByStartingPoint.get(startPosition);
+			solutionsByStartingPoint.put(startPosition, oldCount != null ? oldCount + 1 : 1);
+
+			Solution rotated180Deg = rotated90Deg.rotate(board.width);
+
+			rotatedSolutions.add(rotated180Deg);
+			solutionCount++;
+
+			startPosition = rotated180Deg.startPosition;
+			oldCount = solutionsByStartingPoint.get(startPosition);
+			solutionsByStartingPoint.put(startPosition, oldCount != null ? oldCount + 1 : 1);
+
+			if (isBoardSizeOdd && original.startPosition.col == axisCol) {
+				continue;
+			}
+
+			Solution rotated270Deg = rotated180Deg.rotate(board.width);
+
+			rotatedSolutions.add(rotated270Deg);
+			solutionCount++;
+
+			startPosition = rotated270Deg.startPosition;
+			oldCount = solutionsByStartingPoint.get(startPosition);
 			solutionsByStartingPoint.put(startPosition, oldCount != null ? oldCount + 1 : 1);
 		}
 
