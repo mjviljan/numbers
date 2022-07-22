@@ -4,8 +4,7 @@ import org.apache.commons.lang3.time.StopWatch;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 
 /**
@@ -38,6 +37,8 @@ public class PuzzleSolver {
 	private final List<Solution> solutions;
 
 	private long solutionCount;
+
+	private final HashMap<Position, Integer> solutionsByStartingPoint = new HashMap<>();
 
 	public PuzzleSolver(final Board board) {
 		this.board = board;
@@ -95,6 +96,9 @@ public class PuzzleSolver {
 
 				if (board.isFull()) {
 					solutionCount++;
+					int oldCount = solutionsByStartingPoint.get(startPosition);
+					solutionsByStartingPoint.put(startPosition, oldCount + 1);
+
 					if (logger.isDebugEnabled() || recordSolutions) {
 						Solution foundSolution = new Solution(startPosition, moves);
 						logFoundSolution(foundSolution);
@@ -119,9 +123,11 @@ public class PuzzleSolver {
 		int startingNumber = 1;
 		board.addNumber(start, startingNumber);
 
+		solutionsByStartingPoint.put(start, 0);
+
 		Move[] movesToAttempt;
 		if (start.col == start.row) {
-			movesToAttempt = new Move[]{Move.N, Move.NE, Move.E, Move.SE};
+			movesToAttempt = new Move[]{Move.NW, Move.N, Move.NE, Move.E, Move.SE};
 		} else {
 			movesToAttempt = Move.values();
 		}
@@ -153,19 +159,43 @@ public class PuzzleSolver {
 		for (Position position : startingPoints) {
 			searchAllSolutionsFromStartingPoint(position);
 		}
+
+		mirrorUniqueSolutions();
 	}
 
 	public void mirrorUniqueSolutions() {
 		final List<Solution> mirroredSolutions = new LinkedList<>();
 
-		for (Solution original : solutions) {
-			mirroredSolutions.add(original.mirrorDiagonally());
-			solutionCount++;
+		Set<Solution> uniqueSolutions = new HashSet<>(solutions);
+
+		for (Solution original : uniqueSolutions) {
+			Solution mirrored = original.mirrorDiagonally();
+
+			if (mirrored != null) {
+				mirroredSolutions.add(mirrored);
+				solutionCount++;
+
+				Position startPosition = mirrored.startPosition;
+				Integer oldCount = solutionsByStartingPoint.get(startPosition);
+				solutionsByStartingPoint.put(startPosition, oldCount != null ? oldCount + 1 : 1);
+			}
 		}
 
-		System.out.println("Original:" + solutions.get(0));
-		System.out.println("Mirrored:" + mirroredSolutions.get(0));
 		solutions.addAll(mirroredSolutions);
+	}
+
+	private void logSolutionsByStartingPoint() {
+		StringBuilder sb = new StringBuilder();
+
+		for (int row = 0; row < board.height; row++) {
+			sb.append("\n");
+			for (int col = 0; col < board.height; col++) {
+				Integer sols = solutionsByStartingPoint.get(new Position(col, row));
+				sb.append(sols != null ? sols : "0").append("\t");
+			}
+		}
+
+		logger.info("Solutions by starting point: {}", sb.toString());
 	}
 
 	/**
@@ -180,6 +210,8 @@ public class PuzzleSolver {
 		long duration = stopWatch.getTime();
 
 		logger.info("Found a total of {} solutions in {} milliseconds ({}x{})", solutionCount, duration, board.width, board.height);
+
+		logSolutionsByStartingPoint();
 	}
 
 	public void recordSolutions() {

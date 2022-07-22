@@ -60,6 +60,10 @@ public class Solution {
 	public Solution mirrorDiagonally() {
 		final List<Move> mirroredMoves = new ArrayList<>();
 
+		if (this.startPosition.col == this.startPosition.row && (this.moves.get(0).equals(Move.NW) || this.moves.get(0).equals(Move.SE))) {
+			return null;
+		}
+
 		for (Move move : this.moves) {
 			mirroredMoves.add(move.mirrorDiagonally());
 		}
