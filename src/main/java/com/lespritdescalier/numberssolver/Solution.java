@@ -51,10 +51,15 @@ public class Solution {
 		return Objects.equal(startPosition, other.startPosition) && Objects.equal(moves, other.moves);
 	}
 
-	@SuppressWarnings("unchecked")
-	public Solution rotate(int boardWidth, int boardHeight) {
-		Position rotatedStartposition = new Position(boardWidth - 1 - startPosition.row, startPosition.col);
-		return new Solution(rotatedStartposition, Collections.EMPTY_LIST);
+	public Solution rotate(int boardSize) {
+		final Position rotatedStartposition = new Position(boardSize - 1 - startPosition.row, startPosition.col);
+
+		final List<Move> rotatedMoves = new ArrayList<>();
+		for (Move move : this.moves) {
+			rotatedMoves.add(move.rotate());
+		}
+
+		return new Solution(rotatedStartposition, rotatedMoves);
 	}
 
 	public Solution mirrorDiagonally() {

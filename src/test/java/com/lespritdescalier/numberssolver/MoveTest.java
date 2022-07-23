@@ -84,4 +84,29 @@ public class MoveTest {
 	public void moveNWChangesRowByMinusTwo() {
 		Assertions.assertEquals(-2, Move.NW.rowChange);
 	}
+
+	@Test
+	public void mirroringStraightMoveReturnsMoveMirroredByTheDiagonalAxis() {
+		Assertions.assertEquals(Move.W, Move.N.mirrorDiagonally());
+	}
+
+	@Test
+	public void mirroringDiagonalMoveReturnsMoveMirroredByTheDiagonalAxis() {
+		Assertions.assertEquals(Move.SW, Move.NE.mirrorDiagonally());
+	}
+
+	@Test
+	public void mirroringMoveOnMirroringAxisReturnsOriginalMove() {
+		Assertions.assertEquals(Move.SE, Move.SE.mirrorDiagonally());
+	}
+
+	@Test
+	public void rotatingStraightMoveReturnsMoveRotatedBy90Degrees() {
+		Assertions.assertEquals(Move.E, Move.N.rotate());
+	}
+
+	@Test
+	public void rotatingDiagonalMoveReturnsMoveRotatedBy90Degrees() {
+		Assertions.assertEquals(Move.NW, Move.SW.rotate());
+	}
 }

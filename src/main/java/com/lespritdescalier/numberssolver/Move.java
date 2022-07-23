@@ -32,22 +32,33 @@ enum Move {
 	 * @return the diagonally mirrored counterpart move of the original
 	 */
 	public Move mirrorDiagonally() {
-		switch (this) {
-			case N:
-				return W;
-			case NE:
-				return SW;
-			case E:
-				return S;
-			case S:
-				return E;
-			case SW:
-				return NE;
-			case W:
-				return N;
-			default:
-				return this;
-		}
+		return switch (this) {
+			case N -> W;
+			case NE -> SW;
+			case E -> S;
+			case S -> E;
+			case SW -> NE;
+			case W -> N;
+			default -> this;
+		};
+	}
+
+	/**
+	 * Returns the move rotated by 90 degrees.
+	 *
+	 * @return the rotated move
+	 */
+	public Move rotate() {
+		return switch (this) {
+			case N -> E;
+			case NE -> SE;
+			case E -> S;
+			case SE -> SW;
+			case S -> W;
+			case SW -> NW;
+			case W -> N;
+			case NW -> NE;
+		};
 	}
 
 	static class PositionChanges {
