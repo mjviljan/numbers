@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg width="56mm" height="56mm" version="1.1" viewBox="0 0 56 56" xmlns="http://www.w3.org/2000/svg" stroke="#111" stroke-width="1" fill="none">
   <g transform="scale(.5)">
-    <rect x="1" y="1" width="110" height="110" fill="white" stroke="none" />
+    <rect x="1" y="1" width="110" height="110" fill="white" />
     <path d="m0.5 1 h110.5 v11 H1 v11 h110 v11 H1 v11 h110 v11 H1 v11 h110 v11 H1 v11 h110 v11 H1 v11 h110" />
     <path d="m1 1 v110 h11 V1 h11 v110 h11 V1 h11 v110 h11 V1 h11 v110 h11 V1 h11 v110 h11 V1 h11 v110.5" />
 
-    <text x="47" y="44" font-family="Arial, sans-serif" font-size="12" stroke="none" fill="#111">1</text>
-    <text x="69" y="22" font-family="Arial, sans-serif" font-size="12" stroke="none" fill="#111">2</text>
-    <text x="69" y="55" font-family="Arial, sans-serif" font-size="12" stroke="none" fill="#111">3</text>
-    <text x="69" y="88" font-family="Arial, sans-serif" font-size="12" stroke="none" fill="#111">4</text>
-    <text x="36" y="88" font-family="Arial, sans-serif" font-size="12" stroke="none" fill="#111">5</text>
-    <text x="3" y="88" font-family="Arial, sans-serif" font-size="12" stroke="none" fill="#111">6</text>
-    <text x="3" y="55" font-family="Arial, sans-serif" font-size="12" stroke="none" fill="#111">7</text>
-    <text x="25" y="77" font-family="Arial, sans-serif" font-size="12" stroke="none" fill="#111">8</text>
+    <g font-family="Arial, sans-serif" font-size="12" stroke="none" fill="#111">
+      <text x="47" y="44">1</text>
+      <text x="69" y="22">2</text>
+      <text x="69" y="55">3</text>
+      <text x="69" y="88">4</text>
+      <text x="36" y="88">5</text>
+      <text x="3" y="88">6</text>
+      <text x="3" y="55">7</text>
+      <text x="25" y="77">8</text>
+    </g>
   </g>
 </svg>

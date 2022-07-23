@@ -27,9 +27,15 @@ I've written a program earlier that finds a single solution to the puzzle by ran
 
 The algorithm is a simple (and stupid) depth-first search, starting separately from each starting point. There is currently very little optimization, and the solver runs rather quickly only up to a 5x5 grid for which it finds all possible solutions in less than a second.
 
-### Optimization ideas
+### Optimization
 
 Since many of the solutions are mirror images or rotated versions of another solution, it should be enough to find all solutions in only part of the starting positions and then generate other solutions based on those. Using this approach, it should be enough to e.g. find all solutions starting in one quarter of the grid, and then transform those to find the rest of the solutions.
+
+![Picture of a grid after eight moves](doc-img/uniqueStartingPoints.svg "After eight moves")
+
+![Picture of a grid after eight moves](doc-img/afterMirroring.svg "After eight moves")
+
+![Picture of a grid after eight moves](doc-img/rotating.svg "After eight moves")
 
 ## License
 
