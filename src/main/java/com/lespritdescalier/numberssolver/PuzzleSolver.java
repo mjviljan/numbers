@@ -4,7 +4,9 @@ import org.apache.commons.lang3.time.StopWatch;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 
 
 /**
@@ -174,6 +176,16 @@ public class PuzzleSolver {
 		solutions.addAll(mirroredSolutions);
 	}
 
+	private Solution rotateSolutionBy90Degrees(Solution original) {
+		Solution rotated90Deg = original.rotate(board.width);
+
+		Position startPosition = rotated90Deg.startPosition;
+		Integer oldCount = solutionsByStartingPoint.get(startPosition);
+		solutionsByStartingPoint.put(startPosition, oldCount != null ? oldCount + 1 : 1);
+
+		return rotated90Deg;
+	}
+
 	private void rotateSolutions() {
 		final List<Solution> rotatedSolutions = new LinkedList<>();
 
@@ -190,33 +202,20 @@ public class PuzzleSolver {
 				continue;
 			}
 
-			Solution rotated90Deg = original.rotate(board.width);
-
+			Solution rotated90Deg = rotateSolutionBy90Degrees(original);
 			rotatedSolutions.add(rotated90Deg);
 
-			Position startPosition = rotated90Deg.startPosition;
-			Integer oldCount = solutionsByStartingPoint.get(startPosition);
-			solutionsByStartingPoint.put(startPosition, oldCount != null ? oldCount + 1 : 1);
-
-			Solution rotated180Deg = rotated90Deg.rotate(board.width);
-
+			Solution rotated180Deg = rotateSolutionBy90Degrees(rotated90Deg);
 			rotatedSolutions.add(rotated180Deg);
 
-			startPosition = rotated180Deg.startPosition;
-			oldCount = solutionsByStartingPoint.get(startPosition);
-			solutionsByStartingPoint.put(startPosition, oldCount != null ? oldCount + 1 : 1);
-
+			// on odd-sized board, skip the middle column also
+			// on the last rotation to avoid duplicates
 			if (isBoardSizeOdd && original.startPosition.col == axisCol) {
 				continue;
 			}
 
-			Solution rotated270Deg = rotated180Deg.rotate(board.width);
-
+			Solution rotated270Deg = rotateSolutionBy90Degrees(rotated180Deg);
 			rotatedSolutions.add(rotated270Deg);
-
-			startPosition = rotated270Deg.startPosition;
-			oldCount = solutionsByStartingPoint.get(startPosition);
-			solutionsByStartingPoint.put(startPosition, oldCount != null ? oldCount + 1 : 1);
 		}
 
 		solutions.addAll(rotatedSolutions);

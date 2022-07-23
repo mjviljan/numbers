@@ -1,11 +1,10 @@
 package com.lespritdescalier.numberssolver;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableList;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Solution {
 	public final Position startPosition;
