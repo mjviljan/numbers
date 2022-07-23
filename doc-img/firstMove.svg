@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="56mm" height="56mm" version="1.1" viewBox="0 0 56 56" xmlns="http://www.w3.org/2000/svg" stroke="#111" stroke-width="1" fill="none">
+  <defs>
+    <marker id="arrow" overflow="visible" viewBox="0 0 7 7" orient="auto">
+      <path id="arrowPath" d="m-2-4 11 4 -11 4c2-2.5 2-5 0-8z" fill="#111" />
+    </marker>
+  </defs>
+  <g transform="scale(.5)">
+    <rect x="1" y="1" width="110" height="110" fill="white" stroke="none" />
+    <path d="m0.5 1 h110.5 v11 H1 v11 h110 v11 H1 v11 h110 v11 H1 v11 h110 v11 H1 v11 h110 v11 H1 v11 h110" />
+    <path d="m1 1 v110 h11 V1 h11 v110 h11 V1 h11 v110 h11 V1 h11 v110 h11 V1 h11 v110 h11 V1 h11 v110.5" />
+
+    <text x="47" y="44" font-family="Arial, sans-serif" font-size="12" stroke="none" fill="#111">1</text>
+
+    <path d="m50.5 34 0 -25" marker-end="url(#arrow)" stroke-dasharray="1 1"/>
+    <path d="m56 39.5 25 0" marker-end="url(#arrow)" stroke-dasharray="1 1" />
+    <path d="m50.5 45 0 25" marker-end="url(#arrow)" stroke-dasharray="1 1" />
+    <path d="m45 39.5 -25 0" marker-end="url(#arrow)" stroke-dasharray="1 1" />
+
+    <path d="m56 34 15 -15" marker-end="url(#arrow)" stroke-dasharray="1 1" />
+    <path d="m56 45 15 15" marker-end="url(#arrow)" stroke-dasharray="1 1" />
+    <path d="m45 45 -15 15" marker-end="url(#arrow)" stroke-dasharray="1 1" />
+    <path d="m45 34 -15 -15" marker-end="url(#arrow)" stroke-dasharray="1 1" />
+  </g>
+</svg>
