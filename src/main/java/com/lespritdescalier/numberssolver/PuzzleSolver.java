@@ -18,7 +18,7 @@ import java.util.*;
 public class PuzzleSolver {
 	private final Logger logger = LogManager.getLogger(PuzzleSolver.class);
 	private final boolean SHOW_SOLUTION_BOARD = false;
-	private boolean recordSolutions = true;
+	private final boolean recordSolutions;
 
 	/**
 	 * A puzzle board used to store the state of the progressing search.
@@ -41,7 +41,12 @@ public class PuzzleSolver {
 	private final HashMap<Position, Integer> solutionsByStartingPoint = new HashMap<>();
 
 	public PuzzleSolver(final Board board) {
+		this(board, true);
+	}
+
+	public PuzzleSolver(final Board board, final boolean recordSolutions) {
 		this.board = board;
+		this.recordSolutions = recordSolutions;
 		moves = new LinkedList<>();
 		solutions = new LinkedList<>();
 		solutionCount = 0;
@@ -252,7 +257,7 @@ public class PuzzleSolver {
 	 * Find all possible solutions for the board and report the number of found
 	 * solutions and the time (in milliseconds) it took to find them.
 	 */
-	public void reportSolutions() {
+	public void findSolutions() {
 		StopWatch stopWatch = new StopWatch();
 		stopWatch.start();
 		findSolutionsFromUniquePositions();
@@ -264,18 +269,18 @@ public class PuzzleSolver {
 		logSolutionsByStartingPoint();
 	}
 
-	public void recordSolutions() {
-		recordSolutions = true;
-	}
-
 	public List<Solution> getSolutions() {
 		return solutions;
+	}
+
+	public long getSolutionCount() {
+		return solutionCount;
 	}
 
 	public static void main(String[] args) {
 		// the real board's size is 10x10 but currently the algorithm is fast
 		// enough up to a 5x5 board only
 		PuzzleSolver solver = new PuzzleSolver(new Board(5));
-		solver.reportSolutions();
+		solver.findSolutions();
 	}
 }

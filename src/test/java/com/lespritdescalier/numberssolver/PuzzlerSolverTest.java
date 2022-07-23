@@ -62,7 +62,6 @@ public class PuzzlerSolverTest {
 	@Test
 	public void allSolutionsToPuzzleAreUnique() {
 		PuzzleSolver solver = new PuzzleSolver(new Board(5));
-		solver.recordSolutions();
 		solver.findSolutionsFromUniquePositions();
 		List<Solution> allSolutions = solver.getSolutions();
 		Set<Solution> uniqueSolutions = new HashSet<>(allSolutions);
@@ -79,7 +78,6 @@ public class PuzzlerSolverTest {
 		Solution knownSolution = new Solution(solutionStartPosition, solutionsMoves);
 
 		PuzzleSolver solver = new PuzzleSolver(new Board(5));
-		solver.recordSolutions();
 		solver.findSolutionsFromUniquePositions();
 		List<Solution> allSolutions = solver.getSolutions();
 		Assertions.assertTrue(allSolutions.contains(knownSolution));
@@ -95,7 +93,6 @@ public class PuzzlerSolverTest {
 		Solution knownSolution = new Solution(solutionStartPosition, solutionsMoves);
 
 		PuzzleSolver solver = new PuzzleSolver(new Board(5));
-		solver.recordSolutions();
 		solver.findSolutionsFromUniquePositions();
 		List<Solution> allSolutions = solver.getSolutions();
 		Assertions.assertTrue(allSolutions.contains(knownSolution));
@@ -111,7 +108,6 @@ public class PuzzlerSolverTest {
 		Solution knownSolution = new Solution(solutionStartPosition, solutionsMoves);
 
 		PuzzleSolver solver = new PuzzleSolver(new Board(5));
-		solver.recordSolutions();
 		solver.findSolutionsFromUniquePositions();
 		List<Solution> allSolutions = solver.getSolutions();
 		Assertions.assertTrue(allSolutions.contains(knownSolution));
@@ -127,7 +123,6 @@ public class PuzzlerSolverTest {
 		Solution knownSolution = new Solution(solutionStartPosition, solutionsMoves);
 
 		PuzzleSolver solver = new PuzzleSolver(new Board(5));
-		solver.recordSolutions();
 		solver.findSolutionsFromUniquePositions();
 		List<Solution> allSolutions = solver.getSolutions();
 		Assertions.assertTrue(allSolutions.contains(knownSolution));
@@ -143,7 +138,6 @@ public class PuzzlerSolverTest {
 		Solution knownSolution = new Solution(solutionStartPosition, solutionsMoves);
 
 		PuzzleSolver solver = new PuzzleSolver(new Board(5));
-		solver.recordSolutions();
 		solver.findSolutionsFromUniquePositions();
 		List<Solution> allSolutions = solver.getSolutions();
 		Assertions.assertTrue(allSolutions.contains(knownSolution));
