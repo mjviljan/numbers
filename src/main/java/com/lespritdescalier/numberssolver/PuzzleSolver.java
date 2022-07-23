@@ -11,14 +11,13 @@ import java.util.*;
  * An algorithm for finding all solutions for a number puzzle of given board
  * size. The algorithm is a depth-first search with somewhat optimized search
  * space (attempting to find only unique solutions that are duplicated by
- * rotating to generate all of the possible solutions).
+ * mirroring and rotating to generate all the possible solutions).
  *
- * @author Mika Viljanen (https://github.com/mjviljan)
+ * @author <a href="https://github.com/mjviljan">Mika Viljanen</a>
  */
 public class PuzzleSolver {
 	private final Logger logger = LogManager.getLogger(PuzzleSolver.class);
 	private final boolean SHOW_SOLUTION_BOARD = false;
-	private final boolean recordSolutions;
 
 	/**
 	 * A puzzle board used to store the state of the progressing search.
@@ -31,25 +30,16 @@ public class PuzzleSolver {
 	private final List<Move> moves;
 
 	/**
-	 * Founds solutions. Only recorded if the <code>recordSolutions</code> flag
-	 * is set.
+	 * Found solutions.
 	 */
 	private final List<Solution> solutions;
-
-	private long solutionCount;
 
 	private final HashMap<Position, Integer> solutionsByStartingPoint = new HashMap<>();
 
 	public PuzzleSolver(final Board board) {
-		this(board, true);
-	}
-
-	public PuzzleSolver(final Board board, final boolean recordSolutions) {
 		this.board = board;
-		this.recordSolutions = recordSolutions;
 		moves = new LinkedList<>();
 		solutions = new LinkedList<>();
-		solutionCount = 0;
 	}
 
 	private void logSearchProgress() {
@@ -100,16 +90,13 @@ public class PuzzleSolver {
 				board.addNumber(newPosCandidate, currentNumber);
 
 				if (board.isFull()) {
-					solutionCount++;
 					int oldCount = solutionsByStartingPoint.get(startPosition);
 					solutionsByStartingPoint.put(startPosition, oldCount + 1);
 
-					if (logger.isDebugEnabled() || recordSolutions) {
-						Solution foundSolution = new Solution(startPosition, moves);
+					Solution foundSolution = new Solution(startPosition, moves);
+					solutions.add(foundSolution);
+					if (logger.isDebugEnabled()) {
 						logFoundSolution(foundSolution);
-						if (recordSolutions) {
-							solutions.add(foundSolution);
-						}
 					}
 					clearLastMove(newPosCandidate);
 				} else {
@@ -177,7 +164,6 @@ public class PuzzleSolver {
 
 			if (mirrored != null) {
 				mirroredSolutions.add(mirrored);
-				solutionCount++;
 
 				Position startPosition = mirrored.startPosition;
 				Integer oldCount = solutionsByStartingPoint.get(startPosition);
@@ -207,7 +193,6 @@ public class PuzzleSolver {
 			Solution rotated90Deg = original.rotate(board.width);
 
 			rotatedSolutions.add(rotated90Deg);
-			solutionCount++;
 
 			Position startPosition = rotated90Deg.startPosition;
 			Integer oldCount = solutionsByStartingPoint.get(startPosition);
@@ -216,7 +201,6 @@ public class PuzzleSolver {
 			Solution rotated180Deg = rotated90Deg.rotate(board.width);
 
 			rotatedSolutions.add(rotated180Deg);
-			solutionCount++;
 
 			startPosition = rotated180Deg.startPosition;
 			oldCount = solutionsByStartingPoint.get(startPosition);
@@ -229,7 +213,6 @@ public class PuzzleSolver {
 			Solution rotated270Deg = rotated180Deg.rotate(board.width);
 
 			rotatedSolutions.add(rotated270Deg);
-			solutionCount++;
 
 			startPosition = rotated270Deg.startPosition;
 			oldCount = solutionsByStartingPoint.get(startPosition);
@@ -264,17 +247,13 @@ public class PuzzleSolver {
 		stopWatch.stop();
 		long duration = stopWatch.getTime();
 
-		logger.info("Found a total of {} solutions in {} milliseconds ({}x{})", solutionCount, duration, board.width, board.height);
+		logger.info("Found a total of {} solutions in {} milliseconds ({}x{})", solutions.size(), duration, board.width, board.height);
 
 		logSolutionsByStartingPoint();
 	}
 
 	public List<Solution> getSolutions() {
 		return solutions;
-	}
-
-	public long getSolutionCount() {
-		return solutionCount;
 	}
 
 	public static void main(String[] args) {

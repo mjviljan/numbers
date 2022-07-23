@@ -11,6 +11,13 @@ import java.util.Set;
 public class PuzzlerSolverTest {
 
 	@Test
+	public void solverFindsCorrectNumberOfSolutions() {
+		final PuzzleSolver solver = new PuzzleSolver(new Board(5));
+		solver.findSolutions();
+		Assertions.assertEquals(12400, solver.getSolutions().size());
+	}
+
+	@Test
 	public void solutionsAreSearchedFromOptimalStartingPointsOnly() {
 		final PuzzleSolver solver4x4 = new PuzzleSolver(new Board(4));
 		final List<Position> solutionStartingPoints4x4 = solver4x4.getUniqueSolutionStartingPoints();
