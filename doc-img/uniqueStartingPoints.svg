@@ -22,5 +22,7 @@
       <path d="m0.5 1 h110.5 v11 H1 v11 h110 v11 H1 v11 h110 v11 H1 v11 h110 v11 H1 v11 h110 v11 H1 v11 h110" />
       <path d="m1 1 v110 h11 V1 h11 v110 h11 V1 h11 v110 h11 V1 h11 v110 h11 V1 h11 v110 h11 V1 h11 v110.5" />
     </g>
+
+    <text x="15" y="9" font-family="Arial, sans-serif" font-size="8" stroke="none" fill="#111" font-weight="800">S</text>
   </g>
 </svg>

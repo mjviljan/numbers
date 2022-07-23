@@ -2,7 +2,7 @@
 <svg width="56mm" height="56mm" version="1.1" viewBox="0 0 56 56" xmlns="http://www.w3.org/2000/svg" stroke="#111" stroke-width="1" fill="none">
   <defs>
     <marker id="arrow" overflow="visible" viewBox="0 0 7 7" orient="auto">
-      <path id="arrowPath" d="m-1.5 -3.4 3 3.5 -3 3.5" fill="#111" />
+      <path id="arrowPath" d="m-1.5 -3.4 4 3.5 -4 3.5" fill="#111" />
     </marker>
   </defs>
   <g transform="scale(.5)">
@@ -31,6 +31,26 @@
         <circle cx="56" cy="7" r="6" />
         <circle cx="105" cy="56" r="6" />
         <circle cx="56" cy="105" r="6" />
+      </g>
+    </g>
+
+    <g font-family="Arial, sans-serif" font-size="8" stroke="none" fill="#111" font-weight="800">
+      <text x="15" y="9">S</text>
+      <text x="3.2" y="20">S'</text>
+
+      <g opacity=".6">
+        <text x="15" y="9" transform="translate(112 0) rotate(90)">S</text>
+        <text x="15" y="9" transform="translate(101 -11.5) rotate(90)">S'</text>
+      </g>
+
+      <g opacity=".45">
+        <text x="15" y="9" transform="translate(112 112) rotate(180)">S</text>
+        <text x="15" y="9" transform="translate(124 101) rotate(180)">S'</text>
+      </g>
+
+      <g opacity=".35">
+        <text x="15" y="9" transform="translate(.5 112) rotate(270)">S</text>
+        <text x="15" y="9" transform="translate(11.5 124) rotate(270)">S'</text>
       </g>
     </g>
 
