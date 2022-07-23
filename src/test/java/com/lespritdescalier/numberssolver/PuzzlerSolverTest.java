@@ -11,6 +11,13 @@ import java.util.Set;
 public class PuzzlerSolverTest {
 
 	@Test
+	public void solverFindsCorrectNumberOfSolutions() {
+		final PuzzleSolver solver = new PuzzleSolver(new Board(5));
+		solver.findSolutions();
+		Assertions.assertEquals(12400, solver.getSolutions().size());
+	}
+
+	@Test
 	public void solutionsAreSearchedFromOptimalStartingPointsOnly() {
 		final PuzzleSolver solver4x4 = new PuzzleSolver(new Board(4));
 		final List<Position> solutionStartingPoints4x4 = solver4x4.getUniqueSolutionStartingPoints();
@@ -62,7 +69,6 @@ public class PuzzlerSolverTest {
 	@Test
 	public void allSolutionsToPuzzleAreUnique() {
 		PuzzleSolver solver = new PuzzleSolver(new Board(5));
-		solver.recordSolutions();
 		solver.findSolutionsFromUniquePositions();
 		List<Solution> allSolutions = solver.getSolutions();
 		Set<Solution> uniqueSolutions = new HashSet<>(allSolutions);
@@ -79,7 +85,6 @@ public class PuzzlerSolverTest {
 		Solution knownSolution = new Solution(solutionStartPosition, solutionsMoves);
 
 		PuzzleSolver solver = new PuzzleSolver(new Board(5));
-		solver.recordSolutions();
 		solver.findSolutionsFromUniquePositions();
 		List<Solution> allSolutions = solver.getSolutions();
 		Assertions.assertTrue(allSolutions.contains(knownSolution));
@@ -95,7 +100,6 @@ public class PuzzlerSolverTest {
 		Solution knownSolution = new Solution(solutionStartPosition, solutionsMoves);
 
 		PuzzleSolver solver = new PuzzleSolver(new Board(5));
-		solver.recordSolutions();
 		solver.findSolutionsFromUniquePositions();
 		List<Solution> allSolutions = solver.getSolutions();
 		Assertions.assertTrue(allSolutions.contains(knownSolution));
@@ -111,7 +115,6 @@ public class PuzzlerSolverTest {
 		Solution knownSolution = new Solution(solutionStartPosition, solutionsMoves);
 
 		PuzzleSolver solver = new PuzzleSolver(new Board(5));
-		solver.recordSolutions();
 		solver.findSolutionsFromUniquePositions();
 		List<Solution> allSolutions = solver.getSolutions();
 		Assertions.assertTrue(allSolutions.contains(knownSolution));
@@ -127,7 +130,6 @@ public class PuzzlerSolverTest {
 		Solution knownSolution = new Solution(solutionStartPosition, solutionsMoves);
 
 		PuzzleSolver solver = new PuzzleSolver(new Board(5));
-		solver.recordSolutions();
 		solver.findSolutionsFromUniquePositions();
 		List<Solution> allSolutions = solver.getSolutions();
 		Assertions.assertTrue(allSolutions.contains(knownSolution));
@@ -143,7 +145,6 @@ public class PuzzlerSolverTest {
 		Solution knownSolution = new Solution(solutionStartPosition, solutionsMoves);
 
 		PuzzleSolver solver = new PuzzleSolver(new Board(5));
-		solver.recordSolutions();
 		solver.findSolutionsFromUniquePositions();
 		List<Solution> allSolutions = solver.getSolutions();
 		Assertions.assertTrue(allSolutions.contains(knownSolution));

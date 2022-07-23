@@ -9,6 +9,13 @@ public class Board {
 	public final int width;
 	public final int height;
 
+	/**
+	 * The board is always rectangular and thus only takes one size argument
+	 * when created. It still has separate properties for width and height
+	 * to make going through its cells easier to follow.
+	 *
+	 * @param size the length of each side of the board
+	 */
 	public Board(final int size) {
 		width = size;
 		height = size;
