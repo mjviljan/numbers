@@ -11,15 +11,15 @@ There are strict rules on where numbers can be entered. You can start filling th
 
 A progress of one simple puzzle game is demonstrated in the images below. The first picture shows the situation after the first move. The number "1" is inserted near the middle of the grid, and all of the eight possible directions to advance are available.
 
-![Picture of a grid after the first move](/doc-img/firstMove.png "First move")
+![Picture of a grid after the first move](doc-img/firstMove.svg "First move")
 
 The second picture shows the situation after the second move. The chosen direction was northeast, so the number "2" was inserted two cells away from the previous cell diagonally. Now only five of the possible directions are available; the three choices going straight or diagonally up are not available because the move would be out of the grid bounds, and going southwest is an invalid move because that cell is already filled.
 
-![Picture of a grid after two moves](/doc-img/secondMove.png "Second move")
+![Picture of a grid after two moves](doc-img/secondMove.svg "Second move")
 
 The third picture shows the situation after eight moves. The game could still be continued to six different directions. The moves that got the game to this state are (after inserting the number "1" in a freely chosen cell): NE, S, S, W, W, N, SE.
 
-![Picture of a grid after eight moves](/doc-img/thirdMove.png "After eight moves")
+![Picture of a grid after eight moves](doc-img/afterEightMoves.svg "After eight moves")
 
 ## Searching for solutions
 
