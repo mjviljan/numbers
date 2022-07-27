@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg width="56mm" height="56mm" version="1.1" viewBox="0 0 56 56" xmlns="http://www.w3.org/2000/svg" stroke="#111" stroke-width="1" fill="none">
   <defs>
-    <marker id="arrow" overflow="visible" viewBox="0 0 7 7" orient="auto">
-      <path id="arrowPath" d="m-1.5 -3.4 4 3.5 -4 3.5" fill="#111" />
+    <marker id="arrow" overflow="visible" viewBox="0 0 7 7" orient="auto" stroke="none">
+      <path id="arrowPath" d="m-1.5 -3.4 5 3.5 -5 3.5" fill="#111" />
     </marker>
   </defs>
   <g transform="scale(.5)">

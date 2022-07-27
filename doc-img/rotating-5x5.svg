@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="28mm" height="28mm" version="1.1" viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg" stroke="#111" stroke-width="1" fill="none">
+<svg width="28mm" height="28mm" version="1.1" viewBox="0 0 28.5 28.5" xmlns="http://www.w3.org/2000/svg" stroke="#111" stroke-width="1" fill="none">
   <defs>
-    <marker id="arrow" overflow="visible" viewBox="0 0 7 7" orient="auto">
-      <path id="arrowPath" d="m-1.5 -3.4 4 3.5 -4 3.5" fill="#111" />
+    <marker id="arrow" overflow="visible" viewBox="0 0 7 7" orient="auto" stroke="none">
+      <path id="arrowPath" d="m-1.5 -3.4 5 3.5 -5 3.5" fill="#111" />
     </marker>
   </defs>
   <g transform="scale(.5)">
@@ -28,16 +28,16 @@
       </g>
 
       <g fill="white" stroke-width="1">
-        <circle cx="28.5" cy="6.5" r="5" />
-        <circle cx="50.5" cy="28.5" r="5" />
-        <circle cx="28.5" cy="50.5" r="5" />
+        <circle cx="32.5" cy="6.5" r="5" />
+        <circle cx="50.5" cy="32.5" r="5" />
+        <circle cx="24.5" cy="50.5" r="5" />
       </g>
     </g>
 
     <g font-family="Arial, sans-serif" font-size="10" stroke="none" fill="#111">
-      <text x="25.7" y="10">1</text>
-      <text x="48" y="32">2</text>
-      <text x="25.7" y="54">3</text>
+      <text x="29.5" y="10">1</text>
+      <text x="48" y="36">2</text>
+      <text x="21.7" y="54">3</text>
       <text x="4" y="32.3" fill="red">×</text>
       <text x="15" y="32.3" fill="red">×</text>
     </g>
