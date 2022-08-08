@@ -244,7 +244,6 @@ public class PuzzleSolver {
 						possibleMoves.add(moveCandidate);
 					}
 				}
-				logger.info("Setting moves for {}: {}", pos, possibleMoves);
 				possibleMovesByPoint[getCellIndex(row, col)] = possibleMoves.toArray(new Move[possibleMoves.size()]);
 			}
 		}
