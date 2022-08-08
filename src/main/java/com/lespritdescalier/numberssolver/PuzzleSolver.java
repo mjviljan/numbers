@@ -1,12 +1,11 @@
 package com.lespritdescalier.numberssolver;
 
+import com.google.common.collect.ImmutableSet;
 import org.apache.commons.lang3.time.StopWatch;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 
 /**
@@ -38,8 +37,12 @@ public class PuzzleSolver {
 
 	private final HashMap<Position, Integer> solutionsByStartingPoint = new HashMap<>();
 
+	private final Set<Move> neededFirstMovesFromAxisPoint = ImmutableSet.of(Move.NW, Move.N, Move.NE, Move.E, Move.SE);
+	private final Move[][] possibleMovesByPoint;
+
 	public PuzzleSolver(final Board board) {
 		this.board = board;
+		possibleMovesByPoint = new Move[board.width * board.height][];
 		moves = new LinkedList<>();
 		solutions = new LinkedList<>();
 	}
@@ -63,15 +66,7 @@ public class PuzzleSolver {
 	}
 
 	private boolean isPossibleMove(final Position newPosCandidate) {
-		if (board.isPositionOutOfBounds(newPosCandidate)) {
-			return false;
-		}
-
-		if (board.isPositionOccupied(newPosCandidate)) {
-			return false;
-		}
-
-		return true;
+		return !board.isPositionOccupied(newPosCandidate);
 	}
 
 	private void clearLastMove(final Position pos) {
@@ -102,7 +97,7 @@ public class PuzzleSolver {
 					}
 					clearLastMove(newPosCandidate);
 				} else {
-					findNextMove(startPosition, currentNumber + 1, newPosCandidate, Move.values());
+					findNextMove(startPosition, currentNumber + 1, newPosCandidate, possibleMovesByPoint[getCellIndex(newPosCandidate.row, newPosCandidate.col)]);
 				}
 			}
 		}
@@ -121,9 +116,12 @@ public class PuzzleSolver {
 
 		Move[] movesToAttempt;
 		if (start.col == start.row) {
-			movesToAttempt = new Move[]{Move.NW, Move.N, Move.NE, Move.E, Move.SE};
+			movesToAttempt = Arrays.stream(Move.values())
+					.filter(neededFirstMovesFromAxisPoint::contains)
+					.filter(ImmutableSet.copyOf(possibleMovesByPoint[getCellIndex(start.row, start.col)])::contains)
+					.toArray(Move[]::new);
 		} else {
-			movesToAttempt = Move.values();
+			movesToAttempt = possibleMovesByPoint[getCellIndex(start.row, start.col)];
 		}
 		findNextMove(start, startingNumber + 1, start, movesToAttempt);
 	}
@@ -235,6 +233,26 @@ public class PuzzleSolver {
 		logger.info("Solutions by starting point: {}", sb.toString());
 	}
 
+	private void precalculateMovesForPoints() {
+		for (int row = 0; row < board.height; row++) {
+			for (int col = 0; col < board.height; col++) {
+				Position pos = new Position(col, row);
+				List<Move> possibleMoves = new ArrayList<>();
+				for (Move moveCandidate : Move.values()) {
+					Position posCandidate = pos.applyMove(moveCandidate);
+					if (!board.isPositionOutOfBounds(posCandidate)) {
+						possibleMoves.add(moveCandidate);
+					}
+				}
+				possibleMovesByPoint[getCellIndex(row, col)] = possibleMoves.toArray(new Move[possibleMoves.size()]);
+			}
+		}
+	}
+
+	private int getCellIndex(final int row, final int col) {
+		return row * board.width + col;
+	}
+
 	/**
 	 * Find all possible solutions for the board and report the number of found
 	 * solutions and the time (in milliseconds) it took to find them.
@@ -242,6 +260,7 @@ public class PuzzleSolver {
 	public void findSolutions() {
 		StopWatch stopWatch = new StopWatch();
 		stopWatch.start();
+		precalculateMovesForPoints();
 		findSolutionsFromUniquePositions();
 		stopWatch.stop();
 		long duration = stopWatch.getTime();

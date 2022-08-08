@@ -29,17 +29,17 @@ The algorithm started as a simple (and stupid) depth-first search, starting sepa
 
 ### Optimizations
 
-Luckily the puzzle has some interesting characteristics due to the shape of the board and all starting points being equal in the rules.
+Luckily the puzzle has some interesting characteristics due to the shape of the board and how all its starting points are considered equal.
 
-As the board is a square and the same moving rules apply wherever any starts the game, any valid solution from a particular cell means there are three "identical" solutions in other quadrants of the board also. These can be found simply by rotating the solution on the board 90, 180 and 270 degrees. Actually, if the starting cell isn't on either of the diagonal axes, one can also mirror the solution in relation to the diagonal axis running through the  quadrant the cell is in, and that solution can be rotated to three new solutions also. This means that any solution found proves there are four or even eight solutions to the puzzle. 
+As the board is a square and the same moving rules apply wherever one starts the game, it follows that any valid solution from a particular cell means there are three "identical" solutions in other quadrants of the board also. These can be found simply by rotating the solution on the board 90, 180 and 270 degrees. Actually, if the starting cell isn't on either of the diagonal axes, one can also mirror the solution in relation to the diagonal axis running through the  quadrant the cell is in, and that solution can be rotated to three new solutions also. This means that any solution found proves there are four or even eight solutions to the puzzle.
 
-It follows from this that one only needs to find solutions from a rather small subset of board cells, and then just mirror and rotate the found solutions to deduce all the solutions the board has. For a 10&times;10 grid, only 15 cells of 100 need to be handled separately, and some of those only partly. These unique starting point cells are shown in the image below. An example starting point for which solutions are found is marked in the image with "S". 
+This means that one only needs to find solutions from a rather small subset of board cells, and then just mirror and rotate the found solutions to deduce all the solutions the board has. For a 10&times;10 grid, only 15 cells of 100 need to be handled separately, and some of those only partly. These unique starting point cells are shown in the image below. An example starting point for which solutions are found is marked in the image with _S_.
 
 ![Unique starting points](doc-img/uniqueStartingPoints.svg "Unique starting points")
 
-As shown, only about one half of a board quadrant needs to be checked. And when starting from a cell on the diagonal axis of the board, only 5 of the possible 8 first moves – in directions NW, N, NE, E, SE – need to be checked, as the other directions can be handled as mirror images of these. E.g. if the player starts in the cell (2,2) and first moves right (E), and eventually finds a solution, this means that a mirrored solution exists that starts from the same cell and takes a first move down (S).
+As shown, only about one half of a board quadrant needs to be checked. And when starting from a cell on the diagonal axis of the board, only 5 of the possible 8 first moves – in directions NW, N, NE, E, SE – need to be considered, as the other directions can be handled as mirror images of these. E.g. if the player starts in the cell (2,2) and first moves right (E), and eventually finds a solution, this means that a mirrored solution exists that starts from the same cell and takes a first move down (S).
 
-The algorithm starts deducing these other solutions by first mirroring the ones found diagonally. This is enough to cover one quadrant of the board as starting cells. This is shown in the image below. All solutions starting from the example starting point S are now mirrored as solutions starting from S'.
+The algorithm starts deducing these other solutions by first mirroring the ones found diagonally. This is enough to cover one quadrant of the board as starting cells. This is shown in the image below. All solutions starting from the example starting point S are now mirrored as solutions starting from _S'_.
 
 ![Starting cells covered after mirroring](doc-img/afterMirroring.svg "Starting cells covered after mirroring")
 
@@ -55,15 +55,15 @@ This same logic works for different sizes of the board but there are some small 
 
 ![Unique starting points (5&times;5)](doc-img/uniqueStartingPoints-5x5.svg "Unique starting points (5&times;5)")
 
-The mirroring logic is exactly the same as it is for an even-sized board.
+The mirroring logic is exactly the same as it is for an even-sized board. However, the result naturally covers more than a quadrant of the board because of the shape.
 
 ![Starting cells covered after mirroring (5&times;5)](doc-img/afterMirroring-5x5.svg "Starting cells covered after mirroring (5&times;5)")
 
-However, rotating the solutions works a bit differently. Only part of the first quadrant is rotated to avoid duplicating solutions.
+Due to this difference, rotating the solutions works a bit differently. Only part of the first set of solutions is rotated to avoid duplicating solutions.
 
 ![Rotating solutions to all board quadrants (5&times;5)](doc-img/rotating-5x5.svg "Rotating solutions to all board quadrants (5&times;5)")
 
-For a 5&times;5 board, only two rows of the 3-row first quadrant are rotated to avoid doubling the solutions in the middle column. These same solutions can be rotated again to the next quadrant to get more solutions. But in the last rotation the solution set must be made smaller again, to a 2&times;2 group of starting cells, to avoid duplication solutions on the middle row. 
+For a 5&times;5 board, only two rows of the 3-row first quadrant are rotated to avoid doubling the solutions in the middle column. These same solutions can be rotated again to the next quadrant to get more solutions. But in the last rotation the solution set must be made smaller again, to a 2&times;2 group of starting cells, to avoid duplication solutions on the middle row.
 
 #### The effect on the performance
 
