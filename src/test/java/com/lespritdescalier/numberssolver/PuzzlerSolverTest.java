@@ -9,24 +9,23 @@ import java.util.List;
 import java.util.Set;
 
 public class PuzzlerSolverTest {
-
 	@Test
 	public void solverFindsCorrectNumberOfSolutions() {
-		final PuzzleSolver solver = new PuzzleSolver(new Board(5));
+		final PuzzleSolver solver = new PuzzleSolver(5);
 		solver.findSolutions();
 		Assertions.assertEquals(12400, solver.getSolutions().size());
 	}
 
 	@Test
 	public void solutionsAreSearchedFromOptimalStartingPointsOnly() {
-		final PuzzleSolver solver4x4 = new PuzzleSolver(new Board(4));
+		final PuzzleSolver solver4x4 = new PuzzleSolver(4);
 		final List<Position> solutionStartingPoints4x4 = solver4x4.getUniqueSolutionStartingPoints();
 		Assertions.assertEquals(3, solutionStartingPoints4x4.size());
 		Assertions.assertTrue(solutionStartingPoints4x4.contains(new Position(0,0)));
 		Assertions.assertTrue(solutionStartingPoints4x4.contains(new Position(1,0)));
 		Assertions.assertTrue(solutionStartingPoints4x4.contains(new Position(1,1)));
 
-		final PuzzleSolver solver5x5 = new PuzzleSolver(new Board(5));
+		final PuzzleSolver solver5x5 = new PuzzleSolver(5);
 		final List<Position> solutionStartingPoints5x5 = solver5x5.getUniqueSolutionStartingPoints();
 		Assertions.assertEquals(6, solutionStartingPoints5x5.size());
 		Assertions.assertTrue(solutionStartingPoints5x5.contains(new Position(0,0)));
@@ -36,7 +35,7 @@ public class PuzzlerSolverTest {
 		Assertions.assertTrue(solutionStartingPoints5x5.contains(new Position(2,1)));
 		Assertions.assertTrue(solutionStartingPoints5x5.contains(new Position(2,2)));
 
-		final PuzzleSolver solver6x6 = new PuzzleSolver(new Board(6));
+		final PuzzleSolver solver6x6 = new PuzzleSolver(6);
 		final List<Position> solutionStartingPoints6x6 = solver6x6.getUniqueSolutionStartingPoints();
 		Assertions.assertEquals(6, solutionStartingPoints6x6.size());
 		Assertions.assertTrue(solutionStartingPoints6x6.contains(new Position(0,0)));
@@ -46,7 +45,7 @@ public class PuzzlerSolverTest {
 		Assertions.assertTrue(solutionStartingPoints6x6.contains(new Position(2,1)));
 		Assertions.assertTrue(solutionStartingPoints6x6.contains(new Position(2,2)));
 
-		final PuzzleSolver solver10x10 = new PuzzleSolver(new Board(10));
+		final PuzzleSolver solver10x10 = new PuzzleSolver(10);
 		final List<Position> solutionStartingPoints10x10 = solver10x10.getUniqueSolutionStartingPoints();
 		Assertions.assertEquals(15, solutionStartingPoints10x10.size());
 		Assertions.assertTrue(solutionStartingPoints10x10.contains(new Position(0,0)));
@@ -68,8 +67,8 @@ public class PuzzlerSolverTest {
 
 	@Test
 	public void allSolutionsToPuzzleAreUnique() {
-		PuzzleSolver solver = new PuzzleSolver(new Board(5));
-		solver.findSolutionsFromUniquePositions();
+		PuzzleSolver solver = new PuzzleSolver(5);
+		solver.findSolutions();
 		List<Solution> allSolutions = solver.getSolutions();
 		Set<Solution> uniqueSolutions = new HashSet<>(allSolutions);
 
@@ -84,8 +83,8 @@ public class PuzzlerSolverTest {
 				Move.NW, Move.E, Move.S, Move.W, Move.NE, Move.S, Move.NW, Move.NE, Move.SE, Move.W, Move.SE, Move.W);
 		Solution knownSolution = new Solution(solutionStartPosition, solutionsMoves);
 
-		PuzzleSolver solver = new PuzzleSolver(new Board(5));
-		solver.findSolutionsFromUniquePositions();
+		PuzzleSolver solver = new PuzzleSolver(5);
+		solver.findSolutions();
 		List<Solution> allSolutions = solver.getSolutions();
 		Assertions.assertTrue(allSolutions.contains(knownSolution));
 	}
@@ -99,8 +98,8 @@ public class PuzzlerSolverTest {
 				Move.E, Move.SW, Move.N, Move.SW, Move.E, Move.NW, Move.E, Move.S, Move.W, Move.NE, Move.NW, Move.E, Move.S, Move.W);
 		Solution knownSolution = new Solution(solutionStartPosition, solutionsMoves);
 
-		PuzzleSolver solver = new PuzzleSolver(new Board(5));
-		solver.findSolutionsFromUniquePositions();
+		PuzzleSolver solver = new PuzzleSolver(5);
+		solver.findSolutions();
 		List<Solution> allSolutions = solver.getSolutions();
 		Assertions.assertTrue(allSolutions.contains(knownSolution));
 	}
@@ -114,8 +113,8 @@ public class PuzzlerSolverTest {
 				Move.SW, Move.NW, Move.S, Move.NE, Move.NE, Move.W, Move.S, Move.E, Move.NW, Move.S, Move.NE, Move.NW, Move.SW, Move.E);
 		Solution knownSolution = new Solution(solutionStartPosition, solutionsMoves);
 
-		PuzzleSolver solver = new PuzzleSolver(new Board(5));
-		solver.findSolutionsFromUniquePositions();
+		PuzzleSolver solver = new PuzzleSolver(5);
+		solver.findSolutions();
 		List<Solution> allSolutions = solver.getSolutions();
 		Assertions.assertTrue(allSolutions.contains(knownSolution));
 	}
@@ -129,8 +128,8 @@ public class PuzzlerSolverTest {
 				Move.NW, Move.NE, Move.W, Move.SE, Move.SE, Move.N, Move.W, Move.S, Move.NE, Move.W, Move.SE, Move.NE, Move.NW, Move.S);
 		Solution knownSolution = new Solution(solutionStartPosition, solutionsMoves);
 
-		PuzzleSolver solver = new PuzzleSolver(new Board(5));
-		solver.findSolutionsFromUniquePositions();
+		PuzzleSolver solver = new PuzzleSolver(5);
+		solver.findSolutions();
 		List<Solution> allSolutions = solver.getSolutions();
 		Assertions.assertTrue(allSolutions.contains(knownSolution));
 	}
@@ -144,8 +143,8 @@ public class PuzzlerSolverTest {
 				Move.NE, Move.SE, Move.N, Move.SW, Move.SW, Move.E, Move.N, Move.W, Move.SE, Move.N, Move.SW, Move.SE, Move.NE, Move.W);
 		Solution knownSolution = new Solution(solutionStartPosition, solutionsMoves);
 
-		PuzzleSolver solver = new PuzzleSolver(new Board(5));
-		solver.findSolutionsFromUniquePositions();
+		PuzzleSolver solver = new PuzzleSolver(5);
+		solver.findSolutions();
 		List<Solution> allSolutions = solver.getSolutions();
 		Assertions.assertTrue(allSolutions.contains(knownSolution));
 	}
