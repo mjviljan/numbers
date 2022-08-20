@@ -5,8 +5,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.*;
+import java.util.concurrent.Callable;
 
-public class SolverForStartingPoint {
+public class SolverForStartingPoint implements Callable<List<Solution>> {
 	private final Logger logger = LogManager.getLogger(SolverForStartingPoint.class);
 	private final boolean SHOW_SOLUTION_BOARD = false;
 
@@ -118,7 +119,8 @@ public class SolverForStartingPoint {
 		return row * board.width + col;
 	}
 
-	public List<Solution> getSolutions() {
-		return solutions;
+	@Override
+	public List<Solution> call() {
+		return this.searchSolutions();
 	}
 }

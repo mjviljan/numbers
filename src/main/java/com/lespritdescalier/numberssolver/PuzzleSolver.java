@@ -8,6 +8,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 
 /**
@@ -60,11 +64,31 @@ public class PuzzleSolver {
 	 * position.
 	 */
 	public void findSolutionsFromPositions(List<Position> startingPoints) {
-		for (Position position : startingPoints) {
-			SolverForStartingPoint positionSolver = new SolverForStartingPoint(position, boardSize, possibleMovesByPoint);
-			List<Solution> solutionsFromPosition = positionSolver.searchSolutions();
-			solutions.addAll(solutionsFromPosition);
-			solutionsByStartingPoint.put(position, solutionsFromPosition.size());
+		final ExecutorService executorService = Executors.newWorkStealingPool();
+
+		try {
+			List<SolverForStartingPoint> solvers = new ArrayList<>();
+			for (Position position : startingPoints) {
+				solvers.add(new SolverForStartingPoint(position, boardSize, possibleMovesByPoint));
+			}
+			List<Future<List<Solution>>> solutionsFromPositions = executorService.invokeAll(solvers);
+
+			solutionsFromPositions.forEach(future -> {
+				try {
+					final List<Solution> solutionsFromPosition = future.get();
+					if (solutionsFromPosition.size() > 0) {
+						solutions.addAll(solutionsFromPosition);
+						final Position pos = solutionsFromPosition.get(0).startPosition;
+						solutionsByStartingPoint.put(pos, solutionsFromPosition.size());
+					}
+				} catch (InterruptedException | ExecutionException e) {
+					throw new RuntimeException(e);
+				}
+			});
+		} catch (InterruptedException e) {
+			throw new RuntimeException(e);
+		} finally {
+			executorService.shutdown();
 		}
 
 		mirrorUniqueSolutions();
